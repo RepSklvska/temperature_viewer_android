@@ -6,14 +6,25 @@ import 'package:simple_http_api/simple_http_api.dart';
 class RecordStruct {
   String id;
   String date;
-  String temperature;
-  String humidity;
+  late String temperature;
+  late String humidity;
 
-  RecordStruct(this.id, this.date, this.temperature, this.humidity);
-}
-
-class DataStruct {
-  // List<RecordStruct>
+  RecordStruct(this.id, this.date, String temperature, String humidity) {
+    String t = temperature;
+    String h = humidity;
+    if (!h.contains('.')) {
+      h += '.0';
+    }
+    if (t.contains('.')) {
+      if (t.split('.')[1].length == 1) {
+        t += '0';
+      }
+    } else {
+      t += '.00';
+    }
+    this.temperature = t;
+    this.humidity = h;
+  }
 }
 
 class ResultPage extends StatefulWidget {
