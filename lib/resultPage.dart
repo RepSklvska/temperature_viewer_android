@@ -76,33 +76,34 @@ class _ResultPageState extends State<ResultPage> {
         .toList();
   }
 
+  void _getData() async {
+    final url = Uri.parse('${widget.url}/list?i=${widget.lines}');
+    try {
+      final response = await Api.get(url);
+      final result = jsonDecode(response.body);
+      for (var sensor in sensors) {
+        final List<RecordStruct> recordList = [];
+        for (int i = 0; i < result[sensor].length; i++) {
+          var record = result[sensor][i];
+          String id = record['id'].toString();
+          String date = record['date'].toString();
+          String temperature = record['temperature'].toString();
+          String humidity = record['humidity'].toString();
+          recordList.add(RecordStruct(id, date, temperature, humidity));
+        }
+        setState(() {
+          _data[sensor] = recordList;
+        });
+      }
+    } catch (error) {
+      print('Error $error');
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-
-    final url = Uri.parse('${widget.url}/list?i=${widget.lines}');
-    () async {
-      try {
-        final response = await Api.get(url);
-        final result = jsonDecode(response.body);
-        for (var sensor in sensors) {
-          final List<RecordStruct> recordList = [];
-          for (int i = 0; i < result[sensor].length; i++) {
-            var record = result[sensor][i];
-            String id = record['id'].toString();
-            String date = record['date'].toString();
-            String temperature = record['temperature'].toString();
-            String humidity = record['humidity'].toString();
-            recordList.add(RecordStruct(id, date, temperature, humidity));
-          }
-          setState(() {
-            _data[sensor] = recordList;
-          });
-        }
-      } catch (error) {
-        print('Error $error');
-      }
-    }();
+    _getData();
   }
 
   @override
@@ -110,6 +111,12 @@ class _ResultPageState extends State<ResultPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('查询结果'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: _getData,
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
