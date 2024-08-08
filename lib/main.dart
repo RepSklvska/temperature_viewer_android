@@ -14,7 +14,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: false,
       ),
       home: const MyHomePage(),
@@ -37,7 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _setTextFieldValue(String value) {
     _textFieldController.clear();
-    _textFieldController.value = _textFieldController.value.copyWith(text: value,composing: null);
+    _textFieldController.value = _textFieldController.value.copyWith(text: value, composing: null);
   }
 
   void _initializeTextField() async {
@@ -97,11 +96,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const ResultPage(),
+                    builder: (context) => ResultPage(
+                      url: _textFieldController.text,
+                      lines: _queryCounter,
+                    ),
                   ),
-                ).then((_) {
-                  _initializeTextField();
-                });
+                ).then((_) => _initializeTextField());
               },
               child: const Text('查询'),
             ),
