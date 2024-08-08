@@ -47,25 +47,11 @@ class _ResultPageState extends State<ResultPage> {
             child: Row(
               children: [
                 Expanded(
-                  child: Container(
-                    color: Colors.transparent,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          record.id,
-                          style: const TextStyle(fontSize: 14),
-                        ),
-                        const SizedBox(height: 6),
-                        Text(
-                          record.date,
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: Colors.grey.shade600,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                      ],
+                  child: Text(
+                    record.date,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,
                     ),
                   ),
                 ),
