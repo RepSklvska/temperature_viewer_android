@@ -39,6 +39,7 @@ class ResultPage extends StatefulWidget {
 
 class _ResultPageState extends State<ResultPage> {
   int _tabIndex = 0;
+  static const List<String> labels = ['电梯', '中厅', '厨房', 'PVE'];
   final Map<String, List<RecordStruct>> _data = {};
   static const List<String> sensors = ['FC94', 'AB68', 'CE30', '18B8'];
 
@@ -110,7 +111,7 @@ class _ResultPageState extends State<ResultPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('查询结果'),
+        title: Text('查询结果 - ${labels[_tabIndex]}'),
         actions: [
           IconButton(
             icon: Icon(Icons.refresh),
